@@ -1,0 +1,23 @@
+
+
+#gameBoard {
+    position: relative;
+    top: 2vh;
+    left: 40vh;
+    transform: translate(-50%, -50%);
+    border: black 1px solid;
+    background-color: white;
+    display:flex;
+}
+
+#score {
+    position:relative;
+    text-align: center;
+    color:purple;
+    font-size: 10rem;
+    margin-bottom:2vh;
+    padding-bottom: 20vh;
+    margin-left:10%;
+    display:flex;
+}
+

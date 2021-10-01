@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <title>Snake Game</title>
+    <link href="https://fonts.googleapis.com/css?family=Antic+Slab" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+<header>
+   <h1>Ben je klaar om Snake te spelen?</h1>
+    <button class="btn btn-dark btn_yes" onclick="showGame(this)">Ja!</button>
+    <button class="btn btn-dark btn_no">Nee!</button>
+</header>
+<div id="content" class="hidden">
+    <h3>Ben je een beginner of een pro?</h3>
+    <button class="btn btn-dark btn_beginner" onclick="level(this)">Ik ben een beginner</button>
+    <button class="btn btn-dark btn_pro" onclick="level(this)">Ik ben een pro</button>
+<p>Uw score is:</p><div id="score">0</div>
+<canvas id="gameBoard" width="350" height="350"></canvas>
+<h1 class="gameOver">Game Over</h1>
+</div>
+<div class="btn_no_clicked hidden_txt"><p>Nou, mooi is dat!</p></div>
+<div id="playAgain" class="play">
+    <p> Jammer, je hebt het niet gehaald. wil je je score opslaan? naam, score. wil je nog een keer spelen.</p>
+</div>
+</body>
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</html>
