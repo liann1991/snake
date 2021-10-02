@@ -1,4 +1,13 @@
+header{
+    background-color: #6c757d;
+    color: pink;
+    display:flex;
+    font-family: Arial, sans-serif;
+}
 
+#content{
+    background-color: #6c757d;
+}
 
 #gameBoard {
     position: relative;

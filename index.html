@@ -8,9 +8,12 @@
 </head>
 <body>
 <header>
+    <div id="gameBegin" class="hidden_start">
    <h1>Ben je klaar om Snake te spelen?</h1>
     <button class="btn btn-dark btn_yes" onclick="showGame(this)">Ja!</button>
-    <button class="btn btn-dark btn_no">Nee!</button>
+    <button class="btn btn-dark btn_no" onclick="showGame(this)">Nee!</button>
+        <div class="btn_no_clicked hidden_txt"><p>Nou, mooi is dat!</p></div>
+    </div>
 </header>
 <div id="content" class="hidden">
     <h3>Ben je een beginner of een pro?</h3>
@@ -18,11 +21,19 @@
     <button class="btn btn-dark btn_pro" onclick="level(this)">Ik ben een pro</button>
 <p>Uw score is:</p><div id="score">0</div>
 <canvas id="gameBoard" width="350" height="350"></canvas>
-<h1 class="gameOver">Game Over</h1>
-</div>
-<div class="btn_no_clicked hidden_txt"><p>Nou, mooi is dat!</p></div>
-<div id="playAgain" class="play">
-    <p> Jammer, je hebt het niet gehaald. wil je je score opslaan? naam, score. wil je nog een keer spelen.</p>
+    <div class="gameOver">
+<h1>Game Over</h1>
+        <p> Jammer, je hebt het niet gehaald. wil je je score opslaan?</p>
+        <form id="save_score">
+            <input type="text" id="formName" name="name" value=""><br>
+            <label for="formName">Naam</label>
+            <input type="text" id="inputScore" name="score" value=""><br>
+            <label for="inputScore">Naam</label>
+        </form>
+    </div>
+    <div class="playAgain">
+        <h1>Wil je nog een keer spelen?</h1>
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>

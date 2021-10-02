@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $(".gameOver").hide();
+    $(".playAgain").hide();
     $(".hidden").hide();
     $(".hidden_txt").hide();
     scrollTo(0,0)
@@ -27,17 +28,21 @@ let dy = 0;
 let game_over = false;
 
 const game_board = document.getElementById("gameBoard");
-const snakeboard_context = game_board.getContext("2d");
+const game_board_context = game_board.getContext("2d");
 //wil je spelen?
 function showGame(element) {
     if ($(element).hasClass('btn_yes')) {
         $(".hidden").show();
         level();
         $(".btn_yes", ".btn_no").hide();}
-         else {
+         else if ($(element).hasClass('btn_no')) {
             $(".hidden_txt").show();
         }
     }
+    /*
+    function playAgain(){
+        $(".playAgain").show();
+    }*/
 //beginner of pro?
     function level(element){
         if ($(element).hasClass('btn_beginner')) {
@@ -83,10 +88,10 @@ function showGame(element) {
 
 // border om de canvas
     function clearBoard() {
-        snakeboard_context.fillStyle = board_background;
-        snakeboard_context.strokestyle = board_border;
-        snakeboard_context.fillRect(0, 0, game_board.width, game_board.height);
-        snakeboard_context.strokeRect(0, 0, game_board.width, game_board.height);
+        game_board_context.fillStyle = board_background;
+        game_board_context.strokestyle = board_border;
+        game_board_context.fillRect(0, 0, game_board.width, game_board.height);
+        game_board_context.strokeRect(0, 0, game_board.width, game_board.height);
     }
 
 // Draw the snake on the canvas
@@ -96,24 +101,24 @@ function showGame(element) {
     }
 
     function drawFood() {
-        snakeboard_context.fillStyle = 'lightgreen';
-        snakeboard_context.strokestyle = 'darkgreen';
-        snakeboard_context.beginPath();
-        snakeboard_context.arc(food_x, food_y, 5, 0, 2 * Math.PI);
-        snakeboard_context.lineWidth = 2;
-        snakeboard_context.stroke();
-        snakeboard_context.fill();
+        game_board_context.fillStyle = 'lightgreen';
+        game_board_context.strokestyle = 'darkgreen';
+        game_board_context.beginPath();
+        game_board_context.arc(food_x, food_y, 5, 0, 2 * Math.PI);
+        game_board_context.lineWidth = 2;
+        game_board_context.stroke();
+        game_board_context.fill();
     }
 
 // Maak slang
     function drawSnakePart(snakePart) {
-        snakeboard_context.fillStyle = snake_col;
-        snakeboard_context.strokestyle = snake_border;
-        snakeboard_context.beginPath();
-        snakeboard_context.arc(snakePart.x, snakePart.y, 5, 0, 2 * Math.PI);
-        snakeboard_context.lineWidth = 1;
-        snakeboard_context.stroke();
-        snakeboard_context.fill();
+        game_board_context.fillStyle = snake_col;
+        game_board_context.strokestyle = snake_border;
+        game_board_context.beginPath();
+        game_board_context.arc(snakePart.x, snakePart.y, 5, 0, 2 * Math.PI);
+        game_board_context.lineWidth = 1;
+        game_board_context.stroke();
+        game_board_context.fill();
     }
 
 
@@ -142,6 +147,9 @@ function has_game_ended() {
 function gameOver(){
         if (game_over){
             $(".gameOver").show();
+            new Audio('snd/game_over.mp3').play();
+            //$(".hidden").hide();
+            //playAgain();
         }
 }
 
