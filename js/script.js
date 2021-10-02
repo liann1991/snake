@@ -1,7 +1,8 @@
 $(document).ready(function() {
     $(".gameOver").hide();
     $(".playAgain").hide();
-    $(".hidden").hide();
+    $(".hideGame").hide();
+    $(".hideLevel").hide();
     $(".hidden_txt").hide();
     scrollTo(0,0)
 });
@@ -26,29 +27,31 @@ let food_y;
 let dx = 10;
 let dy = 0;
 let game_over = false;
+let total_score = score;
+//let game_over_sound = new Audio('snd/game_over.mp3');
+
 
 const game_board = document.getElementById("gameBoard");
 const game_board_context = game_board.getContext("2d");
 //wil je spelen?
 function showGame(element) {
     if ($(element).hasClass('btn_yes')) {
-        $(".hidden").show();
+        $(".hideLevel").show();
         level();
-        $(".btn_yes", ".btn_no").hide();}
+        $(".ready").hide();}
          else if ($(element).hasClass('btn_no')) {
             $(".hidden_txt").show();
         }
     }
-    /*
-    function playAgain(){
-        $(".playAgain").show();
-    }*/
+
 //beginner of pro?
     function level(element){
         if ($(element).hasClass('btn_beginner')) {
+            $(".hideGame").show();
             startSnakeSlow();
             gen_food();
         } else if ($(element).hasClass('btn_pro')) {
+            $(".hideGame").show();
             startSnakeFast();
             gen_food();
         }
@@ -146,12 +149,13 @@ function has_game_ended() {
 
 function gameOver(){
         if (game_over){
-            $(".gameOver").show();
-            new Audio('snd/game_over.mp3').play();
-            //$(".hidden").hide();
-            //playAgain();
+            $(".gameOver").show(900);
+            //game_over_sound.play();
+            $(".hideGame").hide(900);
+            document.getElementById('totalScore').value = score;
         }
 }
+
 
 
 //Maak eten

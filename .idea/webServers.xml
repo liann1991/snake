@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="eded276d-dd92-46e4-b3ee-9a52824e09f7" name="snake strik elektrotechniek" url="http://strik-elektrotechniek.nl/lianne/snake">
+        <fileTransfer rootFolder="/lianne/snake" accessType="SFTP" host="ssh.strato.com" port="22" sshConfigId="2e8190f8-4b7e-416f-a40d-0e105d34deeb" sshConfig="strik-elektrotechniek.nl@ssh.strato.com:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

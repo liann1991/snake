@@ -1,12 +1,66 @@
+body {
+    background-color: #6c757d;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
 header{
     background-color: #6c757d;
-    color: pink;
+    color: white;
     display:flex;
     font-family: Arial, sans-serif;
+    background-image: url('../img/site_banner.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top:10vh;
+    padding-bottom:10vh;
 }
 
 #content{
     background-color: #6c757d;
+    color:white;
+    display: block;
+    position: absolute;
+    width:100%;
+    text-align: center;
+}
+
+canvas{
+    position:absolute;
+    display:flex;
+}
+
+#gameBegin{
+    font-weight: bold;
+}
+
+.btn_no_clicked{
+    font-weight: bold;
+    font-size: medium;
+}
+
+.buttons{
+    position: relative;
+}
+
+#highScores table{
+    color: white;
+}
+
+#highScores table td{
+    padding-right: 2vw;
+}
+
+#highScores{
+    float:right;
+    padding-right:20vw;
+    height: 50vh;
 }
 
 #gameBoard {
@@ -21,12 +75,18 @@ header{
 
 #score {
     position:relative;
-    text-align: center;
     color:purple;
-    font-size: 10rem;
+    font-size: 6rem;
     margin-bottom:2vh;
     padding-bottom: 20vh;
     margin-left:10%;
     display:flex;
 }
 
+
+
+footer{
+    background-color: #6c757d;
+    padding-top:5vh;
+    padding-bottom:5vh;
+}
