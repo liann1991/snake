@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Game</title>
     <link href="https://fonts.googleapis.com/css?family=Antic+Slab" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -30,20 +31,18 @@
     <div class="btn_no_clicked hidden_txt"><p>Nou, mooi is dat!</p></div>
 
     <div id="highScores">
+        <div id="scores">
+            <p>Uw score is:</p>
+            <div id="score">0</div>
         <h1>Highscores</h1>
         <?php include 'highscores.php';?>
     </div>
+    </div>
 </div>
-
-<div id="game" class="hideGame">
-
-    <p>Uw score is:</p>
-    <div id="score">0</div>
-    <canvas id="gameBoard" width="350" height="350"></canvas>
-</div>
-
     <div class="gameOver">
-<h1>Game Over</h1>
+        <audio id="music" src="snd/game_over.mp3"></audio>
+        <button id="play_game_over" hidden>Play</button>
+        <img src="img/game_over.png" alt="game_over"/>
         <p> Jammer, je hebt het niet gehaald. wil je je score opslaan?</p>
         <form id="save_score" method="post" action="store_data.php">
             <input type="text" id="formName" name="formName" value="gast"><br>
@@ -52,11 +51,21 @@
             <input type="submit" name="submit" value="Submit">
         </form>
     </div>
-    <?php
-    print_r($_SESSION);
-    ?>
+
+<div id="game" class="hideGame">
+    <canvas id="gameBoard"></canvas>
+    <div class="showMobile"></div>
+    <div class="grid-container">
+        <button class="btn_empty grid-item"></button>
+        <button id="button_up" class="grid-item button_up btn btn-dark" onclick="change_direction_mobile(this)">up</button>
+        <button class="btn_empty grid-item"></button>
+        <button id="button_left" class="grid-item button_left btn btn-dark" onclick="change_direction_mobile(this)">left</button>
+        <button id="button_down" class="grid-item button_down btn btn-dark" onclick="change_direction_mobile(this)">down</button>
+        <button id="button_right" class="grid-item button_right btn btn-dark" onclick="change_direction_mobile(this)">right</button>
+    </div>
 </div>
-<footer>Lianne strik, <?php echo date("Y"); ?> </footer>
+</div>
+<footer><p>Lianne strik, <?php echo date("Y"); ?></p> </footer>
 </body>
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="js/script.js"></script>

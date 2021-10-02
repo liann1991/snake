@@ -8,33 +8,51 @@
 </head>
 <body>
 <header>
-    <div id="gameBegin" class="hidden_start">
-   <h1>Ben je klaar om Snake te spelen?</h1>
-    <button class="btn btn-dark btn_yes" onclick="showGame(this)">Ja!</button>
-    <button class="btn btn-dark btn_no" onclick="showGame(this)">Nee!</button>
-        <div class="btn_no_clicked hidden_txt"><p>Nou, mooi is dat!</p></div>
-    </div>
+    <h1>Snake!</h1>
 </header>
-<div id="content" class="hidden">
-    <h3>Ben je een beginner of een pro?</h3>
-    <button class="btn btn-dark btn_beginner" onclick="level(this)">Ik ben een beginner</button>
-    <button class="btn btn-dark btn_pro" onclick="level(this)">Ik ben een pro</button>
-<p>Uw score is:</p><div id="score">0</div>
-<canvas id="gameBoard" width="350" height="350"></canvas>
+<div id="content">
+    <div id="gameBegin" class="hidden_start">
+        <h1>Nog een keer proberen?</h1>
+        <div id="buttons_play" class="buttons">
+            <button class="btn btn-dark btn_yes" onclick="showGame(this)">Ja!</button>
+            <button class="btn btn-dark btn_no" onclick="showGame(this)">Nee!</button>
+        </div>
+
+        <div class="btn_no_clicked hidden_txt"><p>Nou, mooi is dat!</p></div>
+
+        <div id="highScores">
+            <h1>Highscores</h1>
+            <?php include 'highscores.php';?>
+        </div>
+    </div>
+
+    <div id="game" class="hidden">
+        <h3>Ben je een beginner of een pro?</h3>
+        <div id="buttons_level" class="buttons">
+            <button class="btn btn-dark btn_beginner" onclick="level(this)">Ik ben een beginner</button>
+            <button class="btn btn-dark btn_pro" onclick="level(this)">Ik ben een pro</button>
+        </div>
+
+        <p>Uw score is:</p>
+        <div id="score">0</div>
+        <canvas id="gameBoard" width="350" height="350"></canvas>
+    </div>
+
     <div class="gameOver">
-<h1>Game Over</h1>
+        <h1>Game Over</h1>
         <p> Jammer, je hebt het niet gehaald. wil je je score opslaan?</p>
-        <form id="save_score">
-            <input type="text" id="formName" name="name" value=""><br>
+        <form id="save_score" method="post" action="store_data.php">
+            <input type="text" id="formName" name="formName" value="gast"><br>
             <label for="formName">Naam</label>
-            <input type="text" id="inputScore" name="score" value=""><br>
-            <label for="inputScore">Naam</label>
+            <input type="hidden" id="totalScore" name="totalScore" value=""><br>
+            <input type="submit" name="submit" value="Submit">
         </form>
     </div>
     <div class="playAgain">
         <h1>Wil je nog een keer spelen?</h1>
     </div>
 </div>
+<footer>Lianne strik, <?php echo date("Y"); ?> </footer>
 </body>
 <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
