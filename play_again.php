@@ -18,6 +18,7 @@
             <div id="buttons_play" class="buttons">
                 <a href="index.php">Ja!</a>
                 <button class="btn btn-dark btn_no" onclick="showGame(this)">Nee!</button>
+                <div class="btn_no_clicked hidden_txt"><p>Kun je niet tegen je verlies?</p></div>
             </div>
         </div>
         <div id="level" class="hideLevel">
@@ -27,9 +28,6 @@
                 <button class="btn btn-dark btn_pro" onclick="level(this)">Ik ben een pro</button>
             </div>
         </div>
-
-        <div class="btn_no_clicked hidden_txt"><p>Nou, mooi is dat!</p></div>
-
         <div id="highScores">
             <div id="scores">
                 <p>Uw score is:</p>
@@ -43,7 +41,7 @@
         <audio id="music" src="snd/game_over.mp3"></audio>
         <button id="play_game_over" hidden>Play</button>
         <h1>Game Over</h1>
-        <p> Jammer, je hebt het niet gehaald. wil je je score opslaan?</p>
+        <p> Jammer, je hebt het niet gehaald. Vul je naam in om je score op te slaan.</p>
         <form id="save_score" method="post" action="store_data.php">
             <input type="text" id="formName" name="formName" value="gast"><br>
             <label for="formName">Naam</label>

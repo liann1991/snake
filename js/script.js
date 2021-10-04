@@ -7,10 +7,8 @@ $(document).ready(function() {
     scrollTo(0,0)
 });
 
-const board_border = 'black';
-const board_background = '#6c757d';
-const snake_col = 'mediumPurple';
-const snake_border = 'purple';
+const board_background = 'rgba(123,126,133,0.8)';
+const snake_border = 'white';
 
 let snake = [
     {x: 200, y: 200},
@@ -28,8 +26,6 @@ let dx = 10;
 let dy = 0;
 let game_over = false;
 let total_score = score;
-//let game_over_sound = new Audio('snd/game_over.mp3');
-//let game_over_sound = new Audio('https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3');
 
 
 const game_board = document.getElementById("gameBoard");
@@ -65,7 +61,6 @@ document.addEventListener("click", change_direction);
         }
     }
 
-
 // start snake voor beginner
     function startSnakeSlow() {
         if (has_game_ended()) return;
@@ -94,60 +89,41 @@ document.addEventListener("click", change_direction);
 
     function clearBoard() {
         game_board_context.fillStyle = board_background;
-        game_board_context.strokestyle = board_border;
         game_board_context.fillRect(0, 0, game_board.width, game_board.height);
-        game_board_context.strokeRect(0, 0, game_board.width, game_board.height);
     }
 
     function drawSnake() {
         snake.forEach(makeSnakePart);
     }
 
+const img = new Image();
+img.src = 'img/deBrand.png';
+
     function makeFood() {
-        game_board_context.fillStyle = 'lightgreen';
-        game_board_context.strokestyle = 'darkgreen';
+        img.onload = game_board_context.fillStyle = game_board_context.createPattern(img, 'repeat');
         game_board_context.fillRect(food_x, food_y, 10, 10);
-        game_board_context.strokeRect(food_x, food_y, 10, 10);
     }
 
+const img2 = new Image();
+img2.src = 'img/snake_skin.jpg';
+const img3 = new Image();
+img3.src = 'img/snake_head.png';
+
     function makeSnakePart(snakePart) {
-        game_board_context.fillStyle = snake_col;
+        img2.onload = game_board_context.fillStyle = game_board_context.createPattern(img2, 'repeat');
         game_board_context.strokestyle = snake_border;
         game_board_context.fillRect(snakePart.x, snakePart.y, 10, 10);
         game_board_context.strokeRect(snakePart.x, snakePart.y, 10, 10);
-    }
-
-//Game over?
-function has_game_ended() {
-    for (let i = 4; i < snake.length; i++) {
-        const has_hit = (snake[i].x === snake[0].x && snake[i].y === snake[0].y);
-        if (has_hit === true){
-            game_over = true;
-            gameOver();
-            return true;
+        if (snake[0]){
+            img3.onload = game_board_context.fillStyle = game_board_context.createPattern(img3, 'repeat');
+            game_board_context.fillRect(snake[0].x, snake[0].y, 10, 10);
+            game_board_context.strokeRect(snake[0].x, snake[0].y, 10, 10);
+        } else if (snake.slice(-1)) {
+            img2.onload = game_board_context.fillStyle = game_board_context.createPattern(img2, 'repeat');
+            game_board_context.fillRect(snake[0].x, snake[0].y, 10, 10);
+            game_board_context.strokeRect(snake[0].x, snake[0].y, 10, 10);
         }
     }
-    const hitLeftWall = snake[0].x < 0;
-    const hitRightWall = snake[0].x > game_board.width - 10;
-    const hitTopWall = snake[0].y < 0;
-    const hitBottomWall = snake[0].y > game_board.height - 10;
-    if (hitLeftWall || hitRightWall || hitTopWall || hitBottomWall){
-        game_over = true;
-        gameOver();
-    }
-    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
-}
-
-function gameOver(){
-        if (game_over){
-            $(".gameOver").show(900);
-            //game_over_sound.play();
-            $(".hideGame").hide(900);
-            document.getElementById('totalScore').value = score;
-            return document.querySelector('#music').play();
-        }
-}
-
 
     function random_food(min, max) {
         return Math.round((Math.random() * (max - min) + min) / 10) * 10;
@@ -161,36 +137,37 @@ function gameOver(){
             if (has_eaten) gen_food();
         });
     }
-    function change_direction(event, element) {
-        const LEFT_KEY = 37;
-        const RIGHT_KEY = 39;
-        const UP_KEY = 38;
-        const DOWN_KEY = 40;
 
-        if (changing_direction) return;
-        changing_direction = true;
-        const keyPressed = event.keyCode;
-        const goingUp = dy === -10;
-        const goingDown = dy === 10;
-        const goingRight = dx === 10;
-        const goingLeft = dx === -10;
-        if (keyPressed === LEFT_KEY || $(element).hasClass('button_left') && !goingRight) {
-            dx = -10;
-            dy = 0;
-        }
-        if (keyPressed === UP_KEY || $(element).hasClass('button_up') && !goingDown) {
-            dx = 0;
-            dy = -10;
-        }
-        if (keyPressed === RIGHT_KEY || $(element).hasClass('button_right') && !goingLeft) {
-            dx = 10;
-            dy = 0;
-        }
-        if (keyPressed === DOWN_KEY || $(element).hasClass('button_down') && !goingUp) {
-            dx = 0;
-            dy = 10;
-        }
+function change_direction(event) {
+    const LEFT_KEY = 37;
+    const RIGHT_KEY = 39;
+    const UP_KEY = 38;
+    const DOWN_KEY = 40;
+
+    if (changing_direction) return;
+    changing_direction = true;
+    const keyPressed = event.keyCode;
+    const goingUp = dy === -10;
+    const goingDown = dy === 10;
+    const goingRight = dx === 10;
+    const goingLeft = dx === -10;
+    if (keyPressed === LEFT_KEY && !goingRight) {
+        dx = -10;
+        dy = 0;
     }
+    if (keyPressed === UP_KEY && !goingDown) {
+        dx = 0;
+        dy = -10;
+    }
+    if (keyPressed === RIGHT_KEY && !goingLeft) {
+        dx = 10;
+        dy = 0;
+    }
+    if (keyPressed === DOWN_KEY && !goingUp) {
+        dx = 0;
+        dy = 10;
+    }
+}
 
 function change_direction_mobile(element) {
     if (changing_direction) return;
@@ -228,5 +205,36 @@ function change_direction_mobile(element) {
         } else {
             snake.pop();
         }
+}
+
+//Game over?
+
+function has_game_ended() {
+    for (let i = 4; i < snake.length; i++) {
+        const has_hit = (snake[i].x === snake[0].x && snake[i].y === snake[0].y);
+        if (has_hit === true){
+            gameOver();
+            game_over = true;
+        }
+    }
+    const hitLeftWall = snake[0].x < 0;
+    const hitRightWall = snake[0].x > game_board.width - 10;
+    const hitTopWall = snake[0].y < 0;
+    const hitBottomWall = snake[0].y > game_board.height - 10;
+    if (hitLeftWall || hitRightWall || hitTopWall || hitBottomWall){
+        game_over = true;
+        gameOver();
+    }
+    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
+}
+
+function gameOver(){
+    if (game_over){
+        $(".gameOver").show(900);
+        $(".hideGame").hide(900);
+        document.getElementById('totalScore').value = score;
+        game_over = true;
+        return document.querySelector('#music').play();
+    }
 }
     
