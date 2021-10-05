@@ -1,9 +1,11 @@
 $(document).ready(function() {
     $(".gameOver").hide();
     $(".playAgain").hide();
-    //$(".hideGame").hide();
+    $(".hideGame").hide();
     $(".hideLevel").hide();
-    $(".hidden_txt").hide();
+    $(".rules").show();
+    $(".firstStartDiv").hide();
+    $(".hiddenText").hide();
     scrollTo(0,0)
 });
 
@@ -26,6 +28,8 @@ let dx = 10;
 let dy = 0;
 let game_over = false;
 let total_score = score;
+let has_started = false;
+let player_level = "";
 
 
 const game_board = document.getElementById("gameBoard");
@@ -37,23 +41,24 @@ function showGame(element) {
     if ($(element).hasClass('btn_yes')) {
         $(".hideLevel").show();
         level();
-        $(".ready").hide();}
-         else if ($(element).hasClass('btn_no')) {
-            $(".hidden_txt").show();
+        $(".ready").hide();
+    }   else if ($(element).hasClass('btn_no')) {
+            $(".hiddenText").show();
         }
     }
-
-document.addEventListener("keydown", change_direction);
-document.addEventListener("click", change_direction);
 
 //beginner of pro?
     function level(element){
         if ($(element).hasClass('btn_beginner')) {
+            player_level = "beginner";
+            $(".rules").hide();
             $(".hideLevel").hide();
             $(".hideGame").show();
             startSnakeSlow();
             gen_food();
         } else if ($(element).hasClass('btn_pro')) {
+            player_level = "pro";
+            $(".rules").hide();
             $(".hideLevel").hide();
             $(".hideGame").show();
             startSnakeFast();
@@ -68,24 +73,63 @@ document.addEventListener("click", change_direction);
         setTimeout(function onTick() {
             clearBoard();
             makeFood();
+            firstStartSlow();
             move_snake();
             drawSnake();
             // Repeat
             startSnakeSlow();
         }, 160)
     }
+
 // start snake voor pro
-    function startSnakeFast() {
-        if (has_game_ended()) return;
-        changing_direction = false;
-        setTimeout(function onTick() {
-            clearBoard();
-            makeFood();
+function startSnakeFast() {
+    if (has_game_ended()) return;
+    changing_direction = false;
+    setTimeout(function onTick() {
+        clearBoard();
+        makeFood();
+        firstStartFast();
+        move_snake();
+        drawSnake();
+        startSnakeFast();
+    }, 100)
+}
+
+window.addEventListener("keydown", firstStartSlow);
+window.addEventListener("keydown", firstStartFast);
+
+    function firstStartSlow(KeyboardEvent) {
+        if (!has_started) {
+            $(".firstStartDiv").show();
             move_snake();
             drawSnake();
-            startSnakeFast();
-        }, 100)
+            //const keyPressed = event.code;
+            if (KeyboardEvent.key) {
+                has_started = true;
+                startSnakeSlow();
+                $(".firstStartDiv").hide();
+            } else {
+                startSnakeSlow();
+            }
+        }
     }
+
+function firstStartFast(KeyboardEvent) {
+    if (!has_started) {
+        $(".firstStartDiv").show();
+        move_snake();
+        drawSnake();
+        //const keyPressed = event.code;
+        if (KeyboardEvent.key) {
+            has_started = true;
+            startSnakeFast();
+            $(".first_start").hide();
+        } else {
+            startSnakeFast();
+        }
+    }
+}
+
 
     function clearBoard() {
         game_board_context.fillStyle = board_background;
@@ -118,10 +162,6 @@ img3.src = 'img/snake_head.png';
             img3.onload = game_board_context.fillStyle = game_board_context.createPattern(img3, 'repeat');
             game_board_context.fillRect(snake[0].x, snake[0].y, 10, 10);
             game_board_context.strokeRect(snake[0].x, snake[0].y, 10, 10);
-        } else if (snake.slice(-1)) {
-            img2.onload = game_board_context.fillStyle = game_board_context.createPattern(img2, 'repeat');
-            game_board_context.fillRect(snake[0].x, snake[0].y, 10, 10);
-            game_board_context.strokeRect(snake[0].x, snake[0].y, 10, 10);
         }
     }
 
@@ -138,32 +178,30 @@ img3.src = 'img/snake_head.png';
         });
     }
 
-function change_direction(event) {
-    const LEFT_KEY = 37;
-    const RIGHT_KEY = 39;
-    const UP_KEY = 38;
-    const DOWN_KEY = 40;
+document.addEventListener("keydown", change_direction);
+document.addEventListener("click", change_direction);
 
+function change_direction(event) {
     if (changing_direction) return;
     changing_direction = true;
-    const keyPressed = event.keyCode;
+    const keyPressed = event.code;
     const goingUp = dy === -10;
     const goingDown = dy === 10;
     const goingRight = dx === 10;
     const goingLeft = dx === -10;
-    if (keyPressed === LEFT_KEY && !goingRight) {
+    if (keyPressed === 'ArrowLeft' && !goingRight) {
         dx = -10;
         dy = 0;
     }
-    if (keyPressed === UP_KEY && !goingDown) {
+    if (keyPressed === 'ArrowUp' && !goingDown) {
         dx = 0;
         dy = -10;
     }
-    if (keyPressed === RIGHT_KEY && !goingLeft) {
+    if (keyPressed === 'ArrowRight' && !goingLeft) {
         dx = 10;
         dy = 0;
     }
-    if (keyPressed === DOWN_KEY && !goingUp) {
+    if (keyPressed === 'ArrowDown' && !goingUp) {
         dx = 0;
         dy = 10;
     }
@@ -194,6 +232,7 @@ function change_direction_mobile(element) {
         dy = 10;
     }
 }
+
     function move_snake() {
         const head = {x: snake[0].x + dx, y: snake[0].y + dy};
         snake.unshift(head);
@@ -232,8 +271,15 @@ function gameOver(){
     if (game_over){
         $(".gameOver").show(900);
         $(".hideGame").hide(900);
-        document.getElementById('totalScore').value = score;
         game_over = true;
+        document.getElementById('levelDiv').value = player_level;
+        if (player_level === 'beginner'){
+            document.getElementById('totalScoreBeginner').value = score;
+            console.log("beginner");
+        } else if (player_level === 'pro'){
+            document.getElementById('totalScorePro').value = score;
+            console.log("pro");
+        }
         return document.querySelector('#music').play();
     }
 }

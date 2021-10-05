@@ -1,10 +1,10 @@
 html{
-    /*background-color:#6c757d;*/
+    height:100vh;
 }
 
 body {
     background-color: black;
-    background-image: url('../img/snake_background.png');
+    background-image: url('../img/snake_background.jpg');
     /*background-position: center;*/
     background-size: cover;
     background-repeat: no-repeat;
@@ -42,6 +42,11 @@ header h1{
     text-align: center;
     display: inline-block;
     font-size: 16px;
+}
+
+.first_start p{
+    color:white;
+    font-weight: 700;
 }
 
 #gameBegin{
@@ -95,6 +100,7 @@ header h1{
     opacity: 1;
 }
 
+
 canvas{
     width:25vw;
     transform: translate(30%, -5%);
@@ -113,8 +119,11 @@ canvas{
     padding-right:10vw;
 }
 
-#highScores table td{
+#highScores table td, #highScores table th{
     padding-right: 2vw;
+}
+#highScores table{
+    margin-left:2vw;
 }
 
 #scores p{
@@ -138,6 +147,11 @@ canvas{
 .gameOver p{
     font-size: x-large;
     color:black;
+}
+
+#save_score{
+    width:20vw;
+    margin-left:20vw;
 }
 
 .btn_empty{
@@ -186,7 +200,12 @@ footer p{
         display: grid;
         grid-template-columns: auto auto auto;
         padding: 10px;
-        margin-top:5vh;
+        margin-top:1vh;
+    }
+    .first_start p{
+        color:white;
+        font-weight: 700;
+        font-size:3vw;
     }
     #highScores table{
        font-size:60%
@@ -196,16 +215,19 @@ footer p{
     }
     canvas{
         width:45vw;
-        margin-left:5vw;
+        margin-left:-15vw;
     }
     #rules_mobile{
         display:block;
+        float: right;
+    }
+    #rules_mobile p{
+        font-size: small;
     }
     .tooltip_rules{
         display:none;
     }
 }
-
 @media (min-width: 1020px) {
     canvas{
         width:25vw;

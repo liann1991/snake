@@ -18,14 +18,7 @@
             <div id="buttons_play" class="buttons">
                 <a href="index.php">Ja!</a>
                 <button class="btn btn-dark btn_no" onclick="showGame(this)">Nee!</button>
-                <div class="btn_no_clicked hidden_txt"><p>Kun je niet tegen je verlies?</p></div>
-            </div>
-        </div>
-        <div id="level" class="hideLevel">
-            <h1>Ben je een beginner of een pro?</h1>
-            <div id="buttons_level" class="buttons">
-                <button class="btn btn-dark btn_beginner" onclick="level(this)">Ik ben een beginner</button>
-                <button class="btn btn-dark btn_pro" onclick="level(this)">Ik ben een pro</button>
+                <div class="btn_no_clicked hiddenText"><p>Kun je niet tegen je verlies?</p></div>
             </div>
         </div>
         <div id="highScores">
@@ -35,31 +28,6 @@
                 <h1>Highscores</h1>
                 <?php include 'highscores.php';?>
             </div>
-        </div>
-    </div>
-    <div class="gameOver">
-        <audio id="music" src="snd/game_over.mp3"></audio>
-        <button id="play_game_over" hidden>Play</button>
-        <h1>Game Over</h1>
-        <p> Jammer, je hebt het niet gehaald. Vul je naam in om je score op te slaan.</p>
-        <form id="save_score" method="post" action="store_data.php">
-            <input type="text" id="formName" name="formName" value="gast"><br>
-            <label for="formName">Naam</label>
-            <input type="hidden" id="totalScore" name="totalScore" value=""><br>
-            <input type="submit" name="submit" value="Submit">
-        </form>
-    </div>
-
-    <div id="game" class="hideGame">
-        <canvas id="gameBoard"></canvas>
-        <div class="showMobile"></div>
-        <div class="grid-container">
-            <button class="btn_empty grid-item"></button>
-            <button id="button_up" class="grid-item button_up btn btn-dark" onclick="change_direction_mobile(this)">up</button>
-            <button class="btn_empty grid-item"></button>
-            <button id="button_left" class="grid-item button_left btn btn-dark" onclick="change_direction_mobile(this)">left</button>
-            <button id="button_down" class="grid-item button_down btn btn-dark" onclick="change_direction_mobile(this)">down</button>
-            <button id="button_right" class="grid-item button_right btn btn-dark" onclick="change_direction_mobile(this)">right</button>
         </div>
     </div>
 </div>

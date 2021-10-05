@@ -10,23 +10,26 @@
 <body>
 <header>
 <h1>Snake!</h1>
+    <div class="rules">
     <div class="tooltip_rules">&#9432;
         <span class="tooltiptext">Gebruik de pijltjestoetsen om de slang te laten eten. <br>Kom je tegen de wanden of tegen jezelf aan?<br>
         Jammer, dan heb je verloren. Gelukkig kun je het gewoon nog een keer proberen.<br> Succes!</span>
+    </div>
+    <div id="rules_mobile"><p>Gebruik de knoppen op het scherm om de slang te laten eten.<br>  Kom je tegen de wanden of tegen jezelf aan?<br>
+            Jammer, dan heb je verloren. Gelukkig kun je het gewoon nog een keer proberen.<br>  Succes!</p></div>
     </div>
 </header>
 
 <div id="content">
 
 <div id="gameBegin" class="hidden_start">
-    <div id="rules_mobile"><p>Gebruik de knoppen op het scherm om de slang te laten eten.<br>  Kom je tegen de wanden of tegen jezelf aan?<br>
-            Jammer, dan heb je verloren. Gelukkig kun je het gewoon nog een keer proberen.<br>  Succes!</p></div>
+
     <div class="ready">
     <h1>Ben je klaar om Snake te spelen?</h1>
     <div id="buttons_play" class="buttons">
     <button class="btn btn-dark btn_yes" onclick="showGame(this)">Ja!</button>
     <button class="btn btn-dark btn_no" onclick="showGame(this)">Nee!</button>
-        <div class="btn_no_clicked hidden_txt"><h2>Kun je niet tegen je verlies?</h2></div>
+        <div class="btn_no_clicked hiddenText"><h2>Kun je niet tegen je verlies?</h2></div>
     </div>
     </div>
     <div id="level" class="hideLevel">
@@ -54,21 +57,24 @@
         <form id="save_score" method="post" action="store_data.php">
             <input type="text" id="formName" name="formName" value="" required><br>
             <label for="formName"></label><br>
-            <input type="hidden" id="totalScore" name="totalScore" value=""><br>
+            <input type="hidden" id="levelDiv" class="levelDiv" name="levelDiv" value=""><br>
+            <input type="hidden" id="totalScoreBeginner" name="totalScoreBeginner" value=""><br>
+            <input type="hidden" id="totalScorePro" name="totalScorePro" value=""><br>
             <input type="submit" id="submit" name="submit" value="Submit">
         </form>
     </div>
 
 <div id="game" class="hideGame">
-    <canvas id="gameBoard"></canvas>
+    <canvas id="gameBoard">Sorry, helaas lijkt het niet te werken in je huidige browser.</canvas>
+    <div id="firstStart" class="firstStartDiv"><p>Druk op een toets om te beginnen</p></div>
     <div class="showMobile"></div>
     <div class="grid-container">
         <button class="btn_empty grid-item"></button>
-        <button id="button_up" class="grid-item button_up btn btn-dark" onclick="change_direction_mobile(this)">up</button>
+        <button id="button_up" class="playBtn grid-item button_up btn btn-dark" onclick="change_direction_mobile(this)">up</button>
         <button class="btn_empty grid-item"></button>
-        <button id="button_left" class="grid-item button_left btn btn-dark" onclick="change_direction_mobile(this)">left</button>
-        <button id="button_down" class="grid-item button_down btn btn-dark" onclick="change_direction_mobile(this)">down</button>
-        <button id="button_right" class="grid-item button_right btn btn-dark" onclick="change_direction_mobile(this)">right</button>
+        <button id="button_left" class="playBtn grid-item button_left btn btn-dark" onclick="change_direction_mobile(this)">left</button>
+        <button id="button_down" class="playBtn grid-item button_down btn btn-dark" onclick="change_direction_mobile(this)">down</button>
+        <button id="button_right" class="playBtn grid-item button_right btn btn-dark" onclick="change_direction_mobile(this)">right</button>
     </div>
 </div>
 </div>
