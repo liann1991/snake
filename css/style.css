@@ -11,6 +11,12 @@ body {
     overflow: hidden;
 }
 
+.mute-btn{
+    float: right;
+    margin-top: 5vh;
+    margin-right: 5vw;
+}
+
 header{
     color: white;
     font-family: Arial, sans-serif;
@@ -22,6 +28,7 @@ header{
 
 header h1{
     padding-top:7vh;
+    margin-left:7vw;
 }
 
 #content{
@@ -44,33 +51,16 @@ header h1{
     font-size: 16px;
 }
 
-.first_start p{
-    color:white;
-    font-weight: 700;
-}
-
-#gameBegin{
-    font-weight: bold;
-}
-
-#rules_mobile{
+#info-rules{
     display:none;
 }
 
-.buttons{
-    position: relative;
-}
-
-.btn_no_clicked{
-    color:black;
-}
-
-.tooltip_rules {
+.tooltip-rules {
     position: relative;
     display: block;
 }
 
-.tooltip_rules .tooltiptext {
+.tooltip-rules .tooltip-text {
     visibility: hidden;
     width: 20vw;
     background-color: #555;
@@ -84,7 +74,7 @@ header h1{
     transition: opacity 0.3s;
 }
 
-.tooltip_rules .tooltiptext::after {
+.tooltip-rules .tooltip-text::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -95,11 +85,48 @@ header h1{
     border-color: #555 transparent transparent transparent;
 }
 
-.tooltip_rules:hover .tooltiptext {
+.tooltip-rules:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
 }
 
+#game-begin{
+    font-weight: bold;
+}
+
+#buttons-play{
+    position: relative;
+}
+
+.btn-no-clicked{
+    color:black;
+}
+
+#highscores{
+    float:right;
+    color:white;
+    padding-right:10vw;
+}
+
+#highscores table td, #highscores table th{
+    padding-right: 2vw;
+}
+#highscores table{
+    margin-left:2vw;
+}
+
+#highscore-pro, #highscore-beginner{
+    display:none;
+}
+
+#scores p{
+    margin:0;
+ }
+#score {
+    color:white;
+    font-size: 2rem;
+    margin-bottom:2vh;
+}
 
 canvas{
     width:25vw;
@@ -109,52 +136,15 @@ canvas{
     margin-top:5vh;
 }
 
-#image{
-    width:100%;
-}
-
-#highScores{
-    float:right;
+#start-div p{
     color:white;
-    padding-right:10vw;
+    font-weight: 700;
+}
+#start-div-mobile p{
+    display:none;
 }
 
-#highScores table td, #highScores table th{
-    padding-right: 2vw;
-}
-#highScores table{
-    margin-left:2vw;
-}
-
-#scores p{
-    margin:0;
- }
-
-#score {
-    color:white;
-    font-size: 2rem;
-    margin-bottom:2vh;
-}
-
-.gameOver{
-    padding-top:5vh;
-    margin-left:20vw;
-}
-
-.gameOver img{
-    width:20vw;
-}
-.gameOver p{
-    font-size: x-large;
-    color:black;
-}
-
-#save_score{
-    width:20vw;
-    margin-left:20vw;
-}
-
-.btn_empty{
+.btn-empty{
     background: none;
     border:none;
 }
@@ -168,8 +158,29 @@ canvas{
     text-align: center;
 }
 
-.showMobile{
-    display:none;
+.game-over{
+    padding-top:5vh;
+    margin-left:20vw;
+}
+
+.game-over img{
+    width:20vw;
+}
+.game-over p{
+    font-size: x-large;
+    color:black;
+}
+
+#game-over-text{
+    color:white;
+    font-weight: 700;
+    margin-top:1vh;
+    margin-bottom:1vh;
+}
+
+#save-score{
+    width:20vw;
+    margin-left:17vw;
 }
 
 footer{
@@ -178,21 +189,15 @@ footer{
     opacity: 0.8;
     bottom:0;
     padding-left:2vw;
+    padding-top: 2vh;
     width:100vw;
     height:6vh;
-}
-
-footer p{
-    padding-top:2vh;
     font-size: medium;
-    text-align:center;
+    text-align: center;
+    color:white;
 }
-
 
 @media (max-width: 1280px) {
-    .showMobile {
-        display:block;
-    }
     footer{
         display:none;
     }
@@ -202,41 +207,76 @@ footer p{
         padding: 10px;
         margin-top:1vh;
     }
-    .first_start p{
+    .first-start p{
         color:white;
         font-weight: 700;
         font-size:3vw;
     }
-    #highScores table{
+    #highscores table{
        font-size:60%
     }
-    #highScores h1{
+    #highscores h1{
         font-size:80%;
     }
     canvas{
-        width:45vw;
+        width:30vw;
         margin-left:-15vw;
     }
-    #rules_mobile{
+
+    #info-rules{
+        display:block;
+    }
+    #rules-mobile{
         display:block;
         float: right;
     }
-    #rules_mobile p{
+    #info-rules-text p{
         font-size: small;
+        position: absolute;
+        bottom:2vh;
+        left:2vw;
     }
-    .tooltip_rules{
+
+    #start-div{
+        display: none!important;
+    }
+    #start-div-mobile p{
+        display:block;
+        color:white;
+        font-weight: 700;
+    }
+    .tooltip-rules{
         display:none;
     }
+#save-score{
+    margin-left:20vw;
 }
-@media (min-width: 1020px) {
-    canvas{
-        width:25vw;
+    #form-name{
+        margin-bottom: 2vh;
+    }
+
+}
+
+@media (max-width: 767px){
+    #save-score{
+        margin-left:0;
+        width:10vw;
+    }
+    .game-over{
         margin-left:5vw;
     }
+    .game-over img{
+        width:40vw;
+    }
+    #game-over-text{
+        font-size: x-small;
+    }
     .grid-container{
-        width:30vw;
-        height:7vh;
-        padding-bottom: 25vh;
-        margin:0;
+        position: absolute;
+        bottom: 10vh;
+        left:3vw;
+    }
+    #submit{
+        margin-left: 17vw;
     }
 }

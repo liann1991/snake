@@ -1,25 +1,16 @@
 $(document).ready(function() {
-    $(".gameOver").hide();
-    $(".playAgain").hide();
-    $(".hideGame").hide();
-    $(".hideLevel").hide();
+    $(".game-over").hide();
+    $(".play-again").hide();
+    $(".hide-game").hide();
+    $(".hide-level").hide();
     $(".rules").show();
-    $(".firstStartDiv").hide();
-    $(".hiddenText").hide();
-    scrollTo(0,0)
+    $(".first-start-info").hide();
+    $(".hidden-text").hide();
+    $(".info-rules-text").hide();
 });
 
 const board_background = 'rgba(123,126,133,0.8)';
 const snake_border = 'white';
-
-let snake = [
-    {x: 200, y: 200},
-    {x: 190, y: 200},
-    {x: 180, y: 200},
-    {x: 170, y: 200},
-    {x: 160, y: 200}
-]
-
 let score = 0;
 let changing_direction = false;
 let food_x;
@@ -30,157 +21,186 @@ let game_over = false;
 let total_score = score;
 let has_started = false;
 let player_level = "";
-
-
-const game_board = document.getElementById("gameBoard");
+let timeOutFast = 100;
+let timeOutSlow = 200;
+const game_board = document.getElementById("game-board");
 const game_board_context = game_board.getContext("2d");
 const heightRatio = 1;
 game_board.height = game_board.width * heightRatio;
-//wil je spelen?
+
+//positie van de slang
+let snake = [
+    {x: 60, y: 200},
+    {x: 50, y: 200},
+    {x: 40, y: 200},
+    {x: 30, y: 200},
+    {x: 20, y: 200}
+]
+
+function showRulesMobile() {
+    let x = document.getElementById("info-rules-text");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+//wil je spelen? Ja/Nee
 function showGame(element) {
-    if ($(element).hasClass('btn_yes')) {
-        $(".hideLevel").show();
+    if ($(element).hasClass('btn-yes')) {
+        $(".hide-level").show();
         level();
+        document.querySelector("#music").play();
         $(".ready").hide();
-    }   else if ($(element).hasClass('btn_no')) {
-            $(".hiddenText").show();
+    }   else if ($(element).hasClass('btn-no')) {
+            $(".hidden-text").show();
         }
     }
 
-//beginner of pro?
+//Welke level?
     function level(element){
-        if ($(element).hasClass('btn_beginner')) {
+        if ($(element).hasClass('btn-beginner')) {
             player_level = "beginner";
             $(".rules").hide();
-            $(".hideLevel").hide();
-            $(".hideGame").show();
-            startSnakeSlow();
+            $(".hide-level").hide();
+            $(".hide-game").show();
+            startSnake();
             gen_food();
-        } else if ($(element).hasClass('btn_pro')) {
+        } else if ($(element).hasClass('btn-pro')) {
             player_level = "pro";
             $(".rules").hide();
-            $(".hideLevel").hide();
-            $(".hideGame").show();
-            startSnakeFast();
+            $(".hide-level").hide();
+            $(".hide-game").show();
+            startSnake();
             gen_food();
         }
     }
 
-// start snake voor beginner
-    function startSnakeSlow() {
-        if (has_game_ended()) return;
-        changing_direction = false;
-        setTimeout(function onTick() {
-            clearBoard();
-            makeFood();
-            firstStartSlow();
-            move_snake();
-            drawSnake();
-            // Repeat
-            startSnakeSlow();
-        }, 160)
-    }
-
-// start snake voor pro
-function startSnakeFast() {
+    //Start het spel
+function startSnake(){
+    $(".first-start-info").show();
     if (has_game_ended()) return;
     changing_direction = false;
-    setTimeout(function onTick() {
-        clearBoard();
-        makeFood();
-        firstStartFast();
-        move_snake();
-        drawSnake();
-        startSnakeFast();
-    }, 100)
-}
-
-window.addEventListener("keydown", firstStartSlow);
-window.addEventListener("keydown", firstStartFast);
-
-    function firstStartSlow(KeyboardEvent) {
-        if (!has_started) {
-            $(".firstStartDiv").show();
-            move_snake();
-            drawSnake();
-            //const keyPressed = event.code;
-            if (KeyboardEvent.key) {
-                has_started = true;
-                startSnakeSlow();
-                $(".firstStartDiv").hide();
-            } else {
-                startSnakeSlow();
-            }
+    switch (player_level){
+        case "beginner":
+            setTimeout(function onTick() {
+                clearBoard();
+                makeFood();
+                firstStartBrowser();
+                firstStartMobile();
+                move_snake();
+                drawSnake();
+                // Repeat
+                startSnake();
+                }, timeOutSlow);
+            break;
+            case "pro":
+                setTimeout(function onTick() {
+                    clearBoard();
+                    makeFood();
+                    firstStartBrowser();
+                    firstStartMobile();
+                    move_snake();
+                    drawSnake();
+                    startSnake();
+                }, timeOutFast);
+                break;
+            default:
+                setTimeout(function onTick() {
+                    clearBoard();
+                    makeFood();
+                    firstStartBrowser();
+                    firstStartMobile();
+                    move_snake();
+                    drawSnake();
+                    startSnake();
+                }, 100);
         }
     }
 
-function firstStartFast(KeyboardEvent) {
+    //Start het spel? Op een knop op het toetsenbord drukken voor de slang beweegt.
+document.addEventListener('keydown', firstStartBrowser);
+function firstStartBrowser(KeyboardEvent) {
     if (!has_started) {
-        $(".firstStartDiv").show();
         move_snake();
         drawSnake();
-        //const keyPressed = event.code;
-        if (KeyboardEvent.key) {
+        if (KeyboardEvent.code!== null) {
             has_started = true;
-            startSnakeFast();
-            $(".first_start").hide();
+            $(".first-start-info").hide();
+            startSnake();
         } else {
-            startSnakeFast();
+            startSnake();
         }
     }
 }
 
+//Start het spel? Op een knop op het scherm drukken voor de slang beweegt.
+document.addEventListener("click", firstStartMobile);
+function firstStartMobile(element) {
+    if (!has_started) {
+        $(".first-start-info").show();
+        move_snake();
+        drawSnake();
+        if ($(element).hasClass('button-start')) {
+            has_started = true;
+            startSnake();
+        } else {
+            startSnake();
+        }
+    }
+}
 
-    function clearBoard() {
-        game_board_context.fillStyle = board_background;
-        game_board_context.fillRect(0, 0, game_board.width, game_board.height);
+    // maak het bord leeg
+function clearBoard() {
+    game_board_context.fillStyle = board_background;
+    game_board_context.fillRect(0, 0, game_board.width, game_board.height);
+    }
+    // teken de slang
+function drawSnake() {
+    snake.forEach(makeSnakePart);
     }
 
-    function drawSnake() {
-        snake.forEach(makeSnakePart);
-    }
-
-const img = new Image();
-img.src = 'img/deBrand.png';
-
-    function makeFood() {
-        img.onload = game_board_context.fillStyle = game_board_context.createPattern(img, 'repeat');
-        game_board_context.fillRect(food_x, food_y, 10, 10);
-    }
-
+    // zoek afbeeldingen voor de slang
 const img2 = new Image();
 img2.src = 'img/snake_skin.jpg';
 const img3 = new Image();
 img3.src = 'img/snake_head.png';
-
-    function makeSnakePart(snakePart) {
-        img2.onload = game_board_context.fillStyle = game_board_context.createPattern(img2, 'repeat');
-        game_board_context.strokestyle = snake_border;
-        game_board_context.fillRect(snakePart.x, snakePart.y, 10, 10);
-        game_board_context.strokeRect(snakePart.x, snakePart.y, 10, 10);
-        if (snake[0]){
-            img3.onload = game_board_context.fillStyle = game_board_context.createPattern(img3, 'repeat');
-            game_board_context.fillRect(snake[0].x, snake[0].y, 10, 10);
-            game_board_context.strokeRect(snake[0].x, snake[0].y, 10, 10);
-        }
+// teken de slang
+function makeSnakePart(snakePart) {
+    img2.onload = game_board_context.fillStyle = game_board_context.createPattern(img2, 'repeat');
+    game_board_context.strokestyle = snake_border;
+    game_board_context.fillRect(snakePart.x, snakePart.y, 10, 10);
+    game_board_context.strokeRect(snakePart.x, snakePart.y, 10, 10);
+    if (snake[0]){
+        img3.onload = game_board_context.fillStyle = game_board_context.createPattern(img3, 'repeat');
+        game_board_context.fillRect(snake[0].x, snake[0].y, 10, 10);
+        game_board_context.strokeRect(snake[0].x, snake[0].y, 10, 10);
     }
+}
+// zoek afbeelding voor het eten
+const img = new Image();
+img.src = 'img/fire.png';
+// maak het eten
+function makeFood() {
+    img.onload = game_board_context.fillStyle = game_board_context.createPattern(img, 'repeat');
+    game_board_context.fillRect(food_x, food_y, 10, 10);
+}
+// zet het eten random ergens neer
+function random_food(min, max) {
+    return Math.round((Math.random() * (max - min) + min) / 10) * 10;
+}
+function gen_food() {
+    food_x = random_food(0, game_board.width - 10);
+    food_y = random_food(0, game_board.height - 10);
+    snake.forEach(function has_snake_eaten_food(part) {
+        const has_eaten = part.x === food_x && part.y === food_y;
+        if (has_eaten) gen_food();
+    });
+}
 
-    function random_food(min, max) {
-        return Math.round((Math.random() * (max - min) + min) / 10) * 10;
-    }
-
-    function gen_food() {
-        food_x = random_food(0, game_board.width - 10);
-        food_y = random_food(0, game_board.height - 10);
-        snake.forEach(function has_snake_eaten_food(part) {
-            const has_eaten = part.x === food_x && part.y === food_y;
-            if (has_eaten) gen_food();
-        });
-    }
-
+// zorg dat de slang van richting kan veranderen met de knoppen op het toetsenbord
 document.addEventListener("keydown", change_direction);
-document.addEventListener("click", change_direction);
-
 function change_direction(event) {
     if (changing_direction) return;
     changing_direction = true;
@@ -206,7 +226,8 @@ function change_direction(event) {
         dy = 10;
     }
 }
-
+// zorg dat de slang van richting kan veranderen met de knoppen op het scherm
+document.addEventListener("click", change_direction_mobile);
 function change_direction_mobile(element) {
     if (changing_direction) return;
     changing_direction = true;
@@ -215,39 +236,47 @@ function change_direction_mobile(element) {
     const goingRight = dx === 10;
     const goingLeft = dx === -10;
 
-    if ($(element).hasClass('button_left') && !goingRight) {
+    if ($(element).hasClass('button-left') && !goingRight) {
         dx = -10;
         dy = 0;
     }
-    if ($(element).hasClass('button_up') && !goingDown) {
+    if ($(element).hasClass('button-up') && !goingDown) {
         dx = 0;
         dy = -10;
     }
-    if ($(element).hasClass('button_right') && !goingLeft) {
+    if ($(element).hasClass('button-right') && !goingLeft) {
         dx = 10;
         dy = 0;
     }
-    if ($(element).hasClass('button_down') && !goingUp) {
+    if ($(element).hasClass('button-down') && !goingUp) {
         dx = 0;
         dy = 10;
     }
 }
-
-    function move_snake() {
-        const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-        snake.unshift(head);
-        const has_eaten_food = snake[0].x === food_x && snake[0].y === food_y;
-        if (has_eaten_food) {
-            score += 10;
-            document.getElementById('score').innerHTML = score;
-            gen_food();
-        } else {
-            snake.pop();
-        }
+// bereken de score, lengte van de slang en de snelheid.
+function move_snake() {
+    const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+    snake.unshift(head);
+    const has_eaten_food = snake[0].x === food_x && snake[0].y === food_y;
+    if (has_eaten_food) {
+        score += 10;
+        setTimeOut();
+        document.getElementById('score').innerHTML = score;
+        gen_food();
+    } else {
+        snake.pop();
+    }
 }
 
-//Game over?
+// sneller wanneer score hoger is
+function setTimeOut(){
+    if (score <= 300){
+    timeOutFast -= 2;
+    timeOutSlow -= 5;
+    }
+}
 
+//Tegen zichzelf of tegen een wand aan? Game over
 function has_game_ended() {
     for (let i = 4; i < snake.length; i++) {
         const has_hit = (snake[i].x === snake[0].x && snake[i].y === snake[0].y);
@@ -266,21 +295,50 @@ function has_game_ended() {
     }
     return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
 }
-
+// game over. slag score op bij het goede level en speel mp3 af.
 function gameOver(){
+    gameOverText();
     if (game_over){
-        $(".gameOver").show(900);
-        $(".hideGame").hide(900);
+        $(".game-over").show(900);
+        $(".hide-game").hide(900);
         game_over = true;
-        document.getElementById('levelDiv').value = player_level;
+        document.getElementById('level-div').value = player_level;
         if (player_level === 'beginner'){
-            document.getElementById('totalScoreBeginner').value = score;
-            console.log("beginner");
+            document.getElementById('total-score-beginner').value = score;
         } else if (player_level === 'pro'){
-            document.getElementById('totalScorePro').value = score;
-            console.log("pro");
+            document.getElementById('total-score-pro').value = score;
         }
-        return document.querySelector('#music').play();
+        document.querySelector('#music').pause();
+        return document.querySelector('#music-game-over').play();
     }
+}
+
+let game_over_text = $('#game-over-text');
+let data_highscore_1= document.getElementById("highscore-beginner");
+let highest_score_beginner = data_highscore_1.innerHTML;
+let data_highscore_2= document.getElementById("highscore-pro");
+let highest_score_pro = data_highscore_2.innerHTML;
+
+function gameOverText(){
+    if (player_level === "beginner" && score > highest_score_beginner){
+        game_over_text.html("Gefeliciteerd, je hebt de nieuwe highscore! Vul je naam in om je score op te slaan.");
+    } else if (player_level === "pro" && score > highest_score_pro){
+        game_over_text.html("Gefeliciteerd, je hebt de nieuwe highscore! Vul je naam in om je score op te slaan.");
+    } else if (score < 100 && score > 0) {
+        game_over_text.html('Kom op! Je kan toch zeker wel beter dan dit? Vul je naam in om je score op te slaan.');
+    } else if (score < 200 && score > 90){
+            game_over_text.html("Bijna 200 punten. Dit kan beter. Probeer je het nog eens? Vul je naam in om je score op te slaan.");
+    } else if (score < 300 && score > 190){
+            game_over_text.html("Bijna 300 punten! Dit gaat de goede kant op! Vul je naam in om je score op te slaan.");
+    } else if (score < 400 && score > 290){
+            game_over_text.html("Bijna 400 punten! Goed gedaan! Vul je naam in om je score op te slaan.");
+    }  else {
+        game_over_text.html("Helaas, je bent af. Volgende keer beter. Vul je naam in om je score op te slaan.");
+    }
+}
+
+function playAgain(){
+    $(".play-again").show();
+    $(".play-first-time").hide();
 }
     
