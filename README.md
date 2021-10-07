@@ -15,7 +15,7 @@ Ik wilde graag het volgende toevoegen:
 - de beginners en pro's hebben allebei een aparte highscore. 
 - een melding wanneer je de nieuwe highscore hebt. 
 - natuurlijk een irritant muziekje.
-- zowel op de pc als op mobiel speelbaar. 
+- zowel op de pc als op mobiel speelbaar. Dit is naar mijn mening (redelijk) gelukt.
 
 Ik werk graag met if/else functies, omdat dat gemakkelijk leesbaar is voor iedereen, en je zo meteen kunt zien wat er gaat gebeuren. 
 Dit zie je ook wel terug in de code. Ook heb ik besloten om vanuit 1 pagina te werken. 
