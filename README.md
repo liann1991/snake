@@ -23,5 +23,5 @@ Dit omdat hetgene wat je nodig hebt niet constant wisselt, en je anders veel dub
 
 De highscores zijn opgeslagen in een sql database via een php file. 
 Deze worden uiteindelijk ook weer via een php file opgehaald om de highscores uit de database te halen en op het scherm te tonen. 
-Ik heb gekozen voor een sql database omdat ik dit nog nooit heb gedaan en even wilde testen of dit haalbaar zou zijn. 
+Ik heb gekozen voor een sql database omdat ik dit nog nooit heb gedaan en even wilde testen of dit voor mij haalbaar zou zijn. 
 
