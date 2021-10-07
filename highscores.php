@@ -1,9 +1,9 @@
 <?php
 
-$servername = "rdbms.strato.de";
-$database = "dbs4273916";
-$username = "dbu1530745";
-$password = "Lianne1991!";
+$servername = "servernaam";
+$database = "databasenaam";
+$username = "gebruikersnaam";
+$password = "wachtwoord";
 
 
 // Create connection

@@ -4,10 +4,10 @@ $level = $_POST['level-div'];
 $name = $_POST['form-name'];
 $total_score_beginner = $_POST['total-score-beginner'];
 $total_score_pro = $_POST['total-score-pro'];
-$servername = "rdbms.strato.de";
-$database = "dbs4273916";
-$username = "dbu1530745";
-$password = "Lianne1991!";
+$servername = "servernaam";
+$database = "databasenaam";
+$username = "gebruikersnaam";
+$password = "wachtwoord";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $level == 'beginner') {
     // collect value of input field
